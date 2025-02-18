@@ -1,0 +1,45 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+.weather-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 85vh;
+  width: 1000px;
+  background-color: #f0f0f0;
+}
+
+.weather-card {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 300px;
+}
+
+h2 {
+  margin: 10px 0;
+  font-size: 24px;
+}
+
+h3 {
+  margin: 10px 0;
+  color: #ff7f50;
+}
+
+.weather-details p,
+.sun-time p {
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+.sun-time {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+}
