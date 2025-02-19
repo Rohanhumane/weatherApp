@@ -1,45 +1,105 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-.weather-container {
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #6dd5ed, #2193b0);
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 85vh;
-  width: 1000px;
-  background-color: #f0f0f0;
+  height: 100vh;
+  margin: 0;
 }
 
+/* Main Weather Container */
+.weather-container {
+  text-align: center;
+  width: 350px;
+  padding: 20px;
+  background: rgba(249, 4, 4, 0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Title */
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #0b0b0b;
+}
+
+/* Search Box */
+.search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search input {
+  width: 200px;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+.search button {
+  padding: 10px 15px;
+  border: none;
+  background: #ff7f50;
+  color: white;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.search button:hover {
+  background: #ff6347;
+}
+
+/* Weather Card */
 .weather-card {
-  background: white;
+  background: rgba(255, 255, 255, 0.2);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  text-align: center;
-  width: 300px;
 }
 
-h2 {
+.weather-card h2 {
   margin: 10px 0;
-  font-size: 24px;
+  font-size: 22px;
 }
 
-h3 {
+.weather-card h3 {
   margin: 10px 0;
-  color: #ff7f50;
+  font-size: 28px;
+  color: #ffdd57;
+}
+
+/* Weather Details */
+.weather-details,
+.sun-time {
+  margin-top: 10px;
+  font-size: 16px;
 }
 
 .weather-details p,
 .sun-time p {
   margin: 5px 0;
-  font-size: 16px;
 }
 
 .sun-time {
-  margin-top: 10px;
+  margin-top: 15px;
   padding-top: 10px;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* Loading Text */
+p {
+  font-size: 18px;
 }

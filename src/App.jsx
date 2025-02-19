@@ -1,62 +1,75 @@
-import { useEffect, useState } from "react";
+import { useState, Suspense, useRef } from "react";
+// import WeatherComponent from "./components/WeatherComponent";
+
 import "./App.css";
+import useWeather from "./customHook/useWeather";
 
-const API_KEY = `64bfc7ac4d123427d75eaaecbbb13705`;
+const App = () => {
+  const [city, setCity] = useState("Pune");
+  const weatherRef = useRef();
 
-function App() {
-  const [data, setData] = useState(null);
+  const { isError, result } = useWeather(city); // Use the hook directly
 
-  const fetchData = async (city) => {
-    try {
-      const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
-      );
-      const result = await response.json();
-      setData(result);
-    } catch (error) {
-      console.error("Error fetching weather data:", error);
-    }
+  const handleSearch = () => {
+    setCity((prev) => {
+      if (weatherRef.current.value !== "") {
+        return weatherRef.current.value;
+      }
+      return prev;
+    });
   };
 
-  useEffect(() => {
-    fetchData("Pune");
-  }, []);
-
-  const convertTime = (timestamp) => {
-    const date = new Date(timestamp * 1000);
-    return date.toLocaleTimeString();
+  const convertTime = (timestamp, timezoneOffset) => {
+    const date = new Date((timestamp + timezoneOffset) * 1000);
+    return date.toUTCString().split(" ")[4];
   };
 
   return (
     <div className="weather-container">
-      {data && (
-        <div className="weather-card">
-          <h2>
-            {data.name}, {data.sys.country}
-          </h2>
-          <h3>{Math.round(data.main.temp - 273.15)}°C</h3>
+      <h1 className="title">Weather WebApp</h1>
+      <div className="search">
+        <input
+          name="weather"
+          placeholder="Search City"
+          id="weather"
+          ref={weatherRef}
+        />
+        <button onClick={handleSearch}>Submit</button>
+      </div>
 
-          <div className="weather-details">
-            <p>
-              <strong>Humidity:</strong> {data.main.humidity}%
-            </p>
-            <p>
-              <strong>Weather:</strong> {data.weather[0].main}
-            </p>
-          </div>
+      <Suspense fallback={<p>Loading Weather...</p>}>
+        {result && !isError && (
+          <div className="weather-card">
+            <h2>
+              {result.name}, {result.sys.country}
+            </h2>
+            <h3>{Math.round(result.main.temp - 273.15)}°C</h3>
 
-          <div className="sun-time">
-            <p>
-              <strong>Sunrise:</strong> {convertTime(data.sys.sunrise)}
-            </p>
-            <p>
-              <strong>Sunset:</strong> {convertTime(data.sys.sunset)}
-            </p>
+            <div className="weather-details">
+              <p>
+                <strong>Humidity:</strong> {result.main.humidity}%
+              </p>
+              <p>
+                <strong>Weather:</strong> {result.weather[0].main}
+              </p>
+            </div>
+
+            <div className="sun-time">
+              <p>
+                <strong>Sunrise: </strong>
+                {convertTime(result.sys.sunrise, result.timezone)}
+              </p>
+              <p>
+                <strong>Sunset: </strong>
+                {convertTime(result.sys.sunset, result.timezone)}
+              </p>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+        {isError && <p>{isError}</p>}
+      </Suspense>
     </div>
   );
-}
+};
 
 export default App;
