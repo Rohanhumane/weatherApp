@@ -1,5 +1,4 @@
 import { useState, Suspense, useRef } from "react";
-// import WeatherComponent from "./components/WeatherComponent";
 
 import "./App.css";
 import useWeather from "./customHook/useWeather";
